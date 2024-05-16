@@ -6,9 +6,13 @@ on:
 
   workflow_dispatch:
 
+  env:
+    saludo: Hola perro
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: "Test actions"
-        run: echo "Funciona perro...!!!"
+        run: echo ${{ env.saludo }}
