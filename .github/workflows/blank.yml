@@ -27,10 +27,10 @@ jobs:
           echo "Commit SHA: ${{ github.sha }}"
           echo "Reference: ${{ github.ref }}"
           echo "Repository: ${{ github.repository }}"
-          - name: Get user details
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
+      - name: Get user details
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
             curl -s -H "Authorization: token $GITHUB_TOKEN" \
             https://api.github.com/users/${{ github.actor }} \
             | jq '.name'
