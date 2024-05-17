@@ -6,8 +6,8 @@ on:
 
   workflow_dispatch:
 
-  env:
-    saludo: Hola perro
+env:
+  saludo: Hola perro
 
 
 jobs:
