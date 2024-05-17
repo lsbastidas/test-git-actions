@@ -34,4 +34,5 @@ jobs:
             USER_FULL_NAME=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             https://api.github.com/users/${{ github.actor }} \
             | jq '.name')
-    
+      - name: Print User
+        run: echo $USER_FULL_NAME
