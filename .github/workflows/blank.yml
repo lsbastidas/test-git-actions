@@ -30,7 +30,10 @@ jobs:
       - name: Get user details
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #
-        run: |
-            curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/users/${{ github.actor }} \
-            | jq '.name'
+          run: |
+          user_full_name=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/users/${{ github.actor }} | jq -r '.name')
+          echo "User Full Name: $user_full_name" # Debug: Print the extracted name
+          echo "::set-output name=name::$user_full_name"
+  
+      - name: Display user details
+        run: echo "The push was made by ${{ github.actor }} whose full name is ${{ steps.get_user_details.outputs.name }}"
