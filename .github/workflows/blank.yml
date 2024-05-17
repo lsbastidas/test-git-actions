@@ -29,7 +29,7 @@ jobs:
           echo "Repository: ${{ github.repository }}"
       - name: Get user details
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} #
         run: |
             USER_FULL_NAME=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             https://api.github.com/users/${{ github.actor }} \
