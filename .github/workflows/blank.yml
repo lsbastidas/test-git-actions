@@ -35,7 +35,3 @@ jobs:
             https://api.github.com/users/${{ github.actor }} \
             | jq '.name'
     
-      - name: Display user details
-        run: echo "The push was made by ${{ github.actor }} whose full name is $USER_FULL_NAME"
-        env:
-          USER_FULL_NAME: ${{ steps.get_user_details.outputs.name }}
