@@ -23,7 +23,7 @@ jobs:
 
   job3:
     needs: [job1, job2]
-    if: ${{ always() }}
+    if: ${{ always() && failure() != 'job2' }}
     runs-on: ubuntu-latest
     steps:
       - name: Paso 1
