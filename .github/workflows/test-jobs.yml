@@ -34,3 +34,6 @@ jobs:
     steps:
       - name: Paso 1
         run: echo "Este es el trabajo 4"
+      - name: Verificar estado de job3
+        if: ${{ failure() == 'job3' }}
+        run: exit 1
