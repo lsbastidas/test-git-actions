@@ -1,0 +1,29 @@
+name: Ejemplo de GitHub Actions
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Esto permite la ejecución manual
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Paso 1
+        run: echo "Este es el trabajo 1"
+
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Paso 1
+        run: echo "Este es el trabajo 2"
+
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Paso 1
+        run: echo "Este es el trabajo 3"
+
+      - name: Fallar intencionalmente
+        run: exit 1
