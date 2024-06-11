@@ -23,6 +23,7 @@ jobs:
 
   job3:
     needs: [job1, job2]
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - name: Paso 1
