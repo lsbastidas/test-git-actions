@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Paso 1
         run: echo "Este es el trabajo 2"
+      - name: Fallar intencionalmente
+        run: exit 1
 
   job3:
     needs: [job1, job2]
