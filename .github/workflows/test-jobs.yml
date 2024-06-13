@@ -27,7 +27,7 @@ jobs:
       - name: Paso 1
         run: echo "Este es el Test 02"
 
-  job4:
+  Deploy:
     needs: [Test-01, Test-02]
     if: ${{ always() && success('Build') }}
     runs-on: ubuntu-latest
