@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Paso 1
         run: echo "Este es el Build"
+      - name: Fallar intencionalmente
+        run: exit 1
 
   Test-01:
     runs-on: ubuntu-latest
@@ -24,8 +26,6 @@ jobs:
     steps:
       - name: Paso 1
         run: echo "Este es el Test 02"
-      - name: Fallar intencionalmente
-        run: exit 1
 
   job4:
     needs: [Test-01, Test-02]
