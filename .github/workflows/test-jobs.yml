@@ -4,32 +4,32 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # comentario
+  workflow_dispatch: #
 
 jobs:
-  job1:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - name: Paso 1
-        run: echo "Este es el trabajo 1"
+        run: echo "Este es el Build"
 
-  job2:
+  Test-01:
     runs-on: ubuntu-latest
     steps:
       - name: Paso 1
-        run: echo "Este es el trabajo 2"
+        run: echo "Este es el Test 01"
 
-  job3:
+  Test-02:
     runs-on: ubuntu-latest
     steps:
       - name: Paso 1
-        run: echo "Este es el trabajo 3"
+        run: echo "Este es el Test 02"
       - name: Fallar intencionalmente
         run: exit 1
 
   job4:
-    needs: [job1, job2]
-    if: ${{ always() && success('job3') }}
+    needs: [Test-01, Test-02]
+    if: ${{ always() && success('Build') }}
     runs-on: ubuntu-latest
     steps:
       - name: Paso 1
