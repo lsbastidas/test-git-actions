@@ -11,7 +11,7 @@ jobs:
         run: |
           echo "TEST_COUNTRY=col" >> $GITHUB_ENV
           echo "TEST_NAMESPACE=siigo-aurora" >> $GITHUB_ENV
-          echo "TEST_IMAGE=ms-queuemanager" >> $GITHUB_ENV
+          echo "TEST_IMAGE=ms-payjob" >> $GITHUB_ENV
           echo "TEST_CONFIG_SUCCESS=true" >> $GITHUB_ENV
           
       - name: Test deploy microservice
