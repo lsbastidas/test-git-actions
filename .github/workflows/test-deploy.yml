@@ -16,11 +16,14 @@ jobs:
           
       - name: Test deploy microservice
         if: >
-          ${{ contains(env.TEST_COUNTRY, 'col') && (
-            (env.TEST_NAMESPACE != 'siigo-pt' && env.TEST_IMAGE != 'ms-syncportfolio') ||
-            (env.TEST_NAMESPACE != 'siigo-aurora' && env.TEST_IMAGE != 'ms-queuemanager') ||
-            (env.TEST_NAMESPACE != 'siigo-aurora' && env.TEST_IMAGE != 'ms-payjob')
-          ) && env.TEST_CONFIG_SUCCESS == 'true' }}
+          ${{ contains(env.TEST_COUNTRY, 'col') &&
+            !(
+              (env.TEST_NAMESPACE == 'siigo-pt' && env.TEST_IMAGE == 'ms-syncportfolio') ||
+              (env.TEST_NAMESPACE == 'siigo-aurora' && env.TEST_IMAGE == 'ms-queuemanager') ||
+              (env.TEST_NAMESPACE == 'siigo-aurora' && env.TEST_IMAGE == 'ms-payjob')
+            ) &&
+            env.TEST_CONFIG_SUCCESS == 'true'
+          }}
         run: |
           echo "COUNTRY: $TEST_COUNTRY"
           echo "NAMESPACE: $TEST_NAMESPACE"
