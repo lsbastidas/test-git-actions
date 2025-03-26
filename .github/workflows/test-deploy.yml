@@ -11,7 +11,7 @@ jobs:
         run: |
           echo "TEST_COUNTRY=col" >> $GITHUB_ENV
           echo "TEST_NAMESPACE=siigo-pt" >> $GITHUB_ENV
-          echo "TEST_IMAGE=ms-payjob" >> $GITHUB_ENV
+          echo "TEST_IMAGE=ms-syncportfolio" >> $GITHUB_ENV
           echo "TEST_CONFIG_SUCCESS=true" >> $GITHUB_ENV
           
       - name: Test deploy microservice
