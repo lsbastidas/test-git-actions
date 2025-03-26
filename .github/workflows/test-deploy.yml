@@ -27,9 +27,9 @@ jobs:
             !(
               (env.TEST_NAMESPACE == 'siigo-pt' && env.TEST_IMAGE == 'ms-syncportfolio') ||
               (env.TEST_NAMESPACE == 'siigo-aurora' && env.TEST_IMAGE == 'ms-queuemanager') ||
-              (env.TEST_NAMESPACE == 'siigo-aurora' && env.TEST_IMAGE == 'ms-payjob')
-            ) &&
-            env.TEST_CONFIG_SUCCESS == 'true'
+              (env.TEST_NAMESPACE == 'siigo-aurora' && env.TEST_IMAGE == 'ms-payjob') ||
+              env.TEST_CONFIG_SUCCESS != 'true'
+            )
           }}
         run: |
           echo "COUNTRY: $TEST_COUNTRY"
