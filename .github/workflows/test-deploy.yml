@@ -19,7 +19,8 @@ jobs:
           ${{ contains(env.TEST_COUNTRY, 'col') }} && 
           (
             (${{ env.TEST_NAMESPACE != 'siigo-pt' }} && ${{ env.TEST_IMAGE != 'ms-syncportfolio' }}) || 
-            !(${{ env.TEST_NAMESPACE == 'siigo-aurora' && (env.TEST_IMAGE == 'ms-queuemanager' || env.TEST_IMAGE == 'ms-payjob') }})
+            (${{ env.TEST_NAMESPACE != 'siigo-aurora' }} && ${{ env.TEST_IMAGE != 'ms-queuemanager'}}) ||
+            (${{ env.TEST_NAMESPACE != 'siigo-aurora' }} && ${{ env.TEST_IMAGE != 'ms-payjob' }})
           ) && 
           env.TEST_CONFIG_SUCCESS == 'true'
         run: |
