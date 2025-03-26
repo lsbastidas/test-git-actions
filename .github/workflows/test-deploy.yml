@@ -16,7 +16,7 @@ jobs:
           
       - name: Test deploy microservice
         if: >
-          ${{ env.TEST_COUNTRY, 'col' }} &&
+          ${{ env.TEST_COUNTRY != 'col' }} &&
           ${{ env.TEST_NAMESPACE != 'siigo-pt' }} &&
           ${{ env.TEST_IMAGE != 'ms-syncportfolio' }} &&
           env.TEST_CONFIG_SUCCESS == 'true'}}
