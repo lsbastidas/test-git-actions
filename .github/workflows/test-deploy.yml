@@ -18,8 +18,7 @@ jobs:
         if: >
           ${{ env.TEST_COUNTRY != 'col' }} &&
           ${{ env.TEST_NAMESPACE != 'siigo-pt' }} &&
-          ${{ env.TEST_IMAGE != 'ms-syncportfolio' }} &&
-          env.TEST_CONFIG_SUCCESS == 'true'}}
+          ${{ env.TEST_IMAGE != 'ms-syncportfolio' }}
         run: |
           echo "COUNTRY: $TEST_COUNTRY"
           echo "NAMESPACE: $TEST_NAMESPACE"
