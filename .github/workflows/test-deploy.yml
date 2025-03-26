@@ -14,20 +14,12 @@ jobs:
           echo "TEST_IMAGE=ms-syncportfolio" >> $GITHUB_ENV
           echo "TEST_CONFIG_SUCCESS=true" >> $GITHUB_ENV
           
-      - name: Debug environment variables
-        run: |
-          echo "TEST_COUNTRY=$TEST_COUNTRY"
-          echo "TEST_NAMESPACE=$TEST_NAMESPACE"
-          echo "TEST_IMAGE=$TEST_IMAGE"
-          echo "TEST_CONFIG_SUCCESS=$TEST_CONFIG_SUCCESS"
-          
       - name: Test deploy microservice
         if: >
-          ${{ contains(env.TEST_COUNTRY, 'col') &&
-              env.TEST_CONFIG_SUCCESS == 'true' &&
-              !(env.TEST_NAMESPACE == 'siigo-pt' && env.TEST_IMAGE == 'ms-syncportfolio') &&
-              !(env.TEST_NAMESPACE == 'siigo-aurora' && env.TEST_IMAGE == 'ms-queuemanager') &&
-              !(env.TEST_NAMESPACE == 'siigo-aurora' && env.TEST_IMAGE == 'ms-payjob') }}
+          ${{ contains(env.TEST_COUNTRY, 'col') }} &&
+          ${{ env.TEST_NAMESPACE != 'siigo-pt' }} &&
+          ${{ env.TEST_IMAGE != 'ms-syncportfolio' }} &&
+          env.TEST_CONFIG_SUCCESS == 'true'}}
         run: |
           echo "COUNTRY: $TEST_COUNTRY"
           echo "NAMESPACE: $TEST_NAMESPACE"
