@@ -1,0 +1,32 @@
+name: Test-conditional-deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: #
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set test variables - Scenario 1 (should run)
+        run: |
+          echo "TEST_COUNTRY=col" >> $GITHUB_ENV
+          echo "TEST_NAMESPACE=siigo-pt" >> $GITHUB_ENV
+          echo "TEST_IMAGE=ms-syncportfolio" >> $GITHUB_ENV
+          echo "TEST_CONFIG_SUCCESS=true" >> $GITHUB_ENV
+          
+      - name: Test deploy microservice
+        if: >
+          ${{ contains(env.TEST_COUNTRY, 'col') }} && 
+          (
+            (${{ env.TEST_NAMESPACE != 'siigo-pt' }} && ${{ env.TEST_IMAGE != 'ms-syncportfolio' }}) || 
+            !(${{ env.TEST_NAMESPACE == 'siigo-aurora' && (env.TEST_IMAGE == 'ms-queuemanager' || env.TEST_IMAGE == 'ms-payjob') }})
+          ) && 
+          env.TEST_CONFIG_SUCCESS == 'true'
+        run: |
+          echo "COUNTRY: $TEST_COUNTRY"
+          echo "NAMESPACE: $TEST_NAMESPACE"
+          echo "IMAGE: $TEST_IMAGE"
+          echo "TEST SUCCESSFUL: This microservice would be deployed"
