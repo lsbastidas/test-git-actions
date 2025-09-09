@@ -1,34 +1,62 @@
 name: Ejemplo de GitHub Actions
 
-on:  
-  workflow_dispatch: #
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Environment (PD, QA, DEV)'
+        required: true
+        default: 'DEV'
+        type: choice
+        options:
+          - DEV
+          - QA
+          - PD
+      country:
+        description: 'Country code'
+        required: true
+        default: 'COL'
+        type: choice
+        options:
+          - COL
+          - MEX
+          - PER
+          - CHL
+
+permissions:
+  contents: write
 
 jobs:
-  Build:
+  test-tag-creation:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Paso 1
-        run: echo "Este es el Build"
-      - name: Fallar intencionalmente
-        run: exit 1
+    - name: Setup Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
 
-  Test-01:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Paso 1
-        run: echo "Este es el Test 01"
+    - name: Create GitHub tag_01
+      run: |
+        TAG_NAME="v$Test-${{ inputs.env }}-${{ inputs.country }}"
+        gh release create $TAG_NAME --target $(git rev-parse HEAD) --title "Release $TAG_NAME" --notes "Automatic release via GitHub Actions"
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
 
-  Test-02:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Paso 1
-        run: echo "Este es el Test 02"
-
-  Deploy:
-    needs: [Test-01, Test-02]
-    if: ${{ always() && success('Build') }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Paso 1
-        run: echo "Este es el trabajo 4"
-
+    
+    - name: Create GitHub tag_02
+      run: |
+        TAG_NAME="v$Test-${{ inputs.env }}-${{ inputs.country }}"
+        
+        # Verificar si el tag ya existe (previene error 422)
+        if git tag -l "$TAG_NAME" | grep -q "^$TAG_NAME$"; then
+          echo "⚠️ El tag $TAG_NAME ya existe, omitiendo creación" >> $GITHUB_STEP_SUMMARY
+          exit 0
+        fi
+        
+        gh release create "$TAG_NAME" --target $(git rev-parse HEAD) --title "Release $TAG_NAME" --notes "Automatic release via GitHub Actions"
+        echo "✅ Release $TAG_NAME creado exitosamente" >> $GITHUB_STEP_SUMMARY
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
