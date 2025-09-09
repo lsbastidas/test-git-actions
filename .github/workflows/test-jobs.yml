@@ -42,7 +42,7 @@ jobs:
         gh release create $TAG_NAME --target $(git rev-parse HEAD) --title "Release $TAG_NAME" --notes "Automatic release via GitHub Actions"
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
+        GITHUB_TOKEN: ${{ github.token }}
 
     
     - name: Create GitHub tag_02
@@ -59,4 +59,4 @@ jobs:
         echo "✅ Release $TAG_NAME creado exitosamente" >> $GITHUB_STEP_SUMMARY
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
+        GITHUB_TOKEN: ${{ github.token }}
