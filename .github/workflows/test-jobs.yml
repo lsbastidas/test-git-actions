@@ -45,14 +45,18 @@ jobs:
       run: |
         TAG_NAME="Test-${{ inputs.env }}-${{ inputs.country }}"
         
-        # Verificar si el tag ya existe (previene error 422)
-        if git tag -l "$TAG_NAME" | grep -q "^$TAG_NAME$"; then
-          echo "⚠️ El tag $TAG_NAME ya existe, omitiendo creación" >> $GITHUB_STEP_SUMMARY
-          exit 0
+        echo "🔎 Verificando si existe el tag $TAG_NAME en remoto..."
+        if git ls-remote --tags origin | grep -q "refs/tags/$TAG_NAME$"; then
+          echo "⚠️ El tag $TAG_NAME ya existe en GitHub." | tee -a $GITHUB_STEP_SUMMARY
+        else
+          echo "✅ Creando release con el tag $TAG_NAME..."
+          gh release create "$TAG_NAME" \
+            --target "$(git rev-parse HEAD)" \
+            --title "Release $TAG_NAME" \
+            --notes "Automatic release via GitHub Actions"
+    
+          echo "🎉 Se creó correctamente el release con el tag $TAG_NAME" | tee -a $GITHUB_STEP_SUMMARY
         fi
-        
-        gh release create "$TAG_NAME" --target $(git rev-parse HEAD) --title "Release $TAG_NAME" --notes "Automatic release via GitHub Actions"
-        echo "✅ Release $TAG_NAME creado exitosamente" >> $GITHUB_STEP_SUMMARY
       shell: bash
       env:
         GITHUB_TOKEN: ${{ github.token }}
