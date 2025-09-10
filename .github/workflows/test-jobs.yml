@@ -31,6 +31,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
     - name: Setup Git
       run: |
         git config --global user.name "GitHub Actions"
@@ -38,7 +42,7 @@ jobs:
 
     - name: Create GitHub tag_01
       run: |
-        TAG_NAME="v$Test-${{ inputs.env }}-${{ inputs.country }}"
+        TAG_NAME="Test-${{ inputs.env }}-${{ inputs.country }}"
         gh release create $TAG_NAME --target $(git rev-parse HEAD) --title "Release $TAG_NAME" --notes "Automatic release via GitHub Actions"
       shell: bash
       env:
@@ -47,7 +51,7 @@ jobs:
     
     - name: Create GitHub tag_02
       run: |
-        TAG_NAME="v$Test-${{ inputs.env }}-${{ inputs.country }}"
+        TAG_NAME="Test-${{ inputs.env }}-${{ inputs.country }}"
         
         # Verificar si el tag ya existe (previene error 422)
         if git tag -l "$TAG_NAME" | grep -q "^$TAG_NAME$"; then
