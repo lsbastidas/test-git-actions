@@ -43,7 +43,7 @@ jobs:
     
     - name: Create GitHub tag
       run: |
-        TAG_NAME="Test-${{ inputs.env }}-${{ inputs.country }}"
+        TAG_NAME="02-Test-${{ inputs.env }}-${{ inputs.country }}"
         
         echo "🔎 Verificando si existe el tag $TAG_NAME en remoto..."
         if git ls-remote --tags origin | grep -q "refs/tags/$TAG_NAME$"; then
