@@ -40,16 +40,8 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
 
-    - name: Create GitHub tag_01
-      run: |
-        TAG_NAME="Test-${{ inputs.env }}-${{ inputs.country }}"
-        gh release create $TAG_NAME --target $(git rev-parse HEAD) --title "Release $TAG_NAME" --notes "Automatic release via GitHub Actions"
-      shell: bash
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-
     
-    - name: Create GitHub tag_02
+    - name: Create GitHub tag
       run: |
         TAG_NAME="Test-${{ inputs.env }}-${{ inputs.country }}"
         
